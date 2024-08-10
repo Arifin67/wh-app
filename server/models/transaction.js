@@ -14,11 +14,44 @@ module.exports = (sequelize, DataTypes) => {
   }
   transaction.init(
     {
-      ProductId: DataTypes.INTEGER,
-      UserId: DataTypes.INTEGER,
-      stock: DataTypes.INTEGER,
-      price: DataTypes.INTEGER,
-      transactionDate: DataTypes.DATE,
+      ProductId: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: "products",
+          key: "id",
+        },
+      },
+      UserId: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: "users",
+          key: "id",
+        },
+      },
+      stock: {
+        type: DataTypes.INTEGER,
+        validate: {
+          notEmpty: {
+            msg: "Stock is required",
+          },
+        },
+      },
+      price: {
+        type: DataTypes.INTEGER,
+        validate: {
+          notEmpty: {
+            msg: "Price is required",
+          },
+        },
+      },
+      transactionDate: {
+        type: DataTypes.DATE,
+        validate: {
+          notEmpty: {
+            msg: "Transaction Date is required",
+          },
+        },
+      },
     },
     {
       sequelize,
