@@ -9,17 +9,58 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Product.belongsTo(models.User);
+      Product.belongsTo(models.User, { foreignKey: "UserId" });
     }
   }
   Product.init(
     {
-      name: DataTypes.STRING,
-      stock: DataTypes.INTEGER,
-      price: DataTypes.INTEGER,
-      dateIn: DataTypes.DATE,
-      dateOut: DataTypes.DATE,
-      UserId: DataTypes.INTEGER,
+      name: {
+        type: DataTypes.STRING,
+        validate: {
+          notEmpty: {
+            msg: "Name is required",
+          },
+        },
+      },
+      stock: {
+        type: DataTypes.INTEGER,
+        validate: {
+          notEmpty: {
+            msg: "Stock is required",
+          },
+        },
+      },
+      price: {
+        type: DataTypes.INTEGER,
+        validate: {
+          notEmpty: {
+            msg: "Price is required",
+          },
+        },
+      },
+      dateIn: {
+        type: DataTypes.DATE,
+        validate: {
+          notEmpty: {
+            msg: "Date In is required",
+          },
+        },
+      },
+      dateOut: {
+        type: DataTypes.DATE,
+        validate: {
+          notEmpty: {
+            msg: "Date Out is required",
+          },
+        },
+        UserId: {
+          type: DataTypes.INTEGER,
+          references: {
+            model: "Users",
+            key: "id",
+          },
+        },
+      },
     },
     {
       sequelize,
